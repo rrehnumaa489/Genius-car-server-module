@@ -38,7 +38,7 @@ async function run() {
 
         app.get('/services/:id', async (req, res) => {
           const id = req.params.id;
-          console.log("Getting single id", id);
+          //console.log("Getting single id", id);
           const query = {_id : ObjectId(id)};
           const service = await servicesCollection.findOne(query);
           res.send(service);
@@ -52,6 +52,26 @@ async function run() {
             const result = await servicesCollection.insertOne(service);
             console.log(result)
             res.send(result)
+        })
+
+        //Update Api
+
+        app.put('/services/:id', async (req, res) => {
+          const id = req.params.id;
+          const updatedService = req.body;
+          const filter = {_id: ObjectId(id)};
+          const options = { upsert : true};
+          const updateDoc = {
+              $set : {
+                name : updatedService.name,
+                description : updatedService.description,
+                price : updatedService.price,
+                img : updatedService.img
+              },
+          };
+          const result = await servicesCollection.updateOne(filter, updateDoc, options)
+          console.log("updating user", req);
+          res.json(result);
         })
 
         //Delete API
