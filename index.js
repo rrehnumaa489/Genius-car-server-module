@@ -22,7 +22,8 @@ async function run() {
     try {
         await client.connect();
         //console.log('connet to database')
-        const database = client.db("carMechanic");
+        const database = client.db("sunnyPung");
+        // const database = client.db("carMechanic");
         const servicesCollection = database.collection("services");
 
         //Get API
